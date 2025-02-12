@@ -471,8 +471,17 @@ const createZipFile = (
   const dataString = filteredDataStringsFromCsv.value[index]
   let fileName = dataString.trim()
   if (dataString.startsWith('http')) {
-    const pathSegments = dataString.split('/')
-    const lastPathSegment = pathSegments[pathSegments.length - 1]
+    const pathSegments = dataString.split('/');
+    let lastPathSegment = pathSegments[pathSegments.length - 1]
+
+    const qparams = new URLSearchParams(window.location.search);
+    const companyCode = qparams.get('company');
+    const sourceVersion = qparams.get('source_version');
+
+    if(companyCode && sourceVersion){
+        lastPathSegment = `${companyCode}-QRv${sourceVersion}`;
+    }
+
     // Check if lastPathSegment is only alphanumeric or underscores
     const isValidFileName = /^[a-zA-Z0-9_]+$/.test(lastPathSegment)
     if (!isValidFileName) {

@@ -485,9 +485,10 @@ const createZipFile = (
 
     const companyCode = qparams.get('company')
     const sourceVersion = qparams.get('source_version')
+    const floor = qparams.get('floor').trim().split(' ')[0]
 
     if (companyCode && sourceVersion) {
-      fileName = `${companyCode}-QRv${sourceVersion}`
+      fileName = `${companyCode}-floor${floor}-qr${sourceVersion}`
     }
   }
 
